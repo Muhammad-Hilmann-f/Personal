@@ -34,9 +34,9 @@ const Navbar = () => {
   return (
     <div>
       <div
-        className={`max-w-screen-2xl z-50 font-semibold container mx-auto md:px-20 px-4 dark:bg-slate-700 dark:text-white fixed top-0 left-0 right-0 backdrop-blur-sm bg-white/30${
+        className={`max-w-screen-2xl z-50 font-semibold container align-middle mx-auto md:px-20 px-4 fixed top-0 left-0 right-0 backdrop-blur-xl bg-[#3a3982]/30${
           sticky
-            ? " bg-black backdrop-filter dark:bg-slate-700 dark:text-white backdrop-blur"
+            ? " bg-black backdrop-filter dark:bg-slate-700 text-white backdrop-blur"
             : ""
         } shadow-md duration-300 transition-all ease-in-out`}
       >
