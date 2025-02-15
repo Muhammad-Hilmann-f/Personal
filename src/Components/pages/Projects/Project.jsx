@@ -17,10 +17,10 @@ const Projects = () => {
             <span className="loading loading-infinity loading-lg"></span>
             <span className="loading loading-infinity loading-lg"></span>
             <div className="flex cursor-pointer justify-center text-3xl">
-              <Link to="https://github.com/Diewaay?tab=repositories">
+              <Link to="https://github.com/Muhammad-Hilmann-f">
                 <FaGithubSquare className="mr-2" />
               </Link>
-              <Link to="https://www.linkedin.com/in/muhammad-hilman-3174832b2/edit/forms/intro/new/?profileFormEntryPoint=PROFILE_SECTION">
+              <Link to="https://www.linkedin.com/in/muhammad-hilman-firmansyah-666senja/">
                 <FaLinkedin />
               </Link>
             </div>
