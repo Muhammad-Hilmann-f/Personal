@@ -1,7 +1,39 @@
 import { FaGithubSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import InfiniteMenu from "../../../blocks/Components/InfiniteMenu/InfiniteMenu";
+import home from "../../../assets/booking-img/img-fe-booking/home.png";
+import homeHealing from "../../../assets/HealingkuAI/home-healing.png";
+import homeOnly from "../../../assets/OnlySmart/homeOnly.png";
+
 const Projects = () => {
+  const items = [
+    {
+      image: home,
+      link: "https://github.com/Muhammad-Hilmann-f/Booking_D",
+      title: "Website Booking Doctors",
+      description: "MERN Stack",
+    },
+    {
+      image: homeHealing,
+      link: "https://github.com/Reswn/HEALINGKU.AI_UAS_Digital-Startup",
+      title: "Website Travel With ChatBot",
+      description: "",
+    },
+    {
+      image: homeOnly,
+      link: "https://github.com/MuhammadHilmanF/UAS-PBW/tree/onlysmart/PBW-IF-VA/UAS-Onlysmart/OnlySmart",
+      title: "E-commarce",
+      description: "",
+    },
+    {
+      image: "https://picsum.photos/600/600?grayscale",
+      link: "https://google.com/",
+      title: "Proses",
+      description: "This is pretty cool, right?",
+    },
+  ];
+
   return (
     <>
       <div className="text-white min-h-screen max-w-screen-2xl container mx-auto md:px-20 px-4 flex justify-center flex-col md:flex-row my-10">
@@ -12,10 +44,17 @@ const Projects = () => {
                 <code>Projects!</code>
               </pre>
             </div>
-            <span className="loading loading-infinity loading-lg"></span>
-            <span className="loading loading-infinity loading-lg"></span>
-            <span className="loading loading-infinity loading-lg"></span>
-            <span className="loading loading-infinity loading-lg"></span>
+
+            {/* InfiniteMenu */}
+            <div
+              style={{
+                height: "600px",
+                position: "relative",
+              }}
+            >
+              <InfiniteMenu items={items} />
+            </div>
+
             <div className="flex cursor-pointer justify-center text-3xl">
               <Link to="https://github.com/Muhammad-Hilmann-f">
                 <FaGithubSquare className="mr-2" />

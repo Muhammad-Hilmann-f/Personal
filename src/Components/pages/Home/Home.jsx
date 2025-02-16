@@ -3,6 +3,10 @@ import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import TextPressure from "../../../blocks/TextAnimations/TextPressure/TextPressure";
 import Iridescence from "../../../blocks/Backgrounds/Iridescence/Iridescence";
+import card from "../../../blocks/Components/Lanyard/card.glb";
+import lanyardTexture from "../../../blocks/Components/Lanyard/lanyard.png";
+import Lanyard from "../../../blocks/Components/Lanyard/Lanyard.tsx";
+import hilman from "../../../assets/lanyard/hilman.png";
 
 const Home = () => {
   const socialLinks = [
@@ -23,17 +27,28 @@ const Home = () => {
   ];
 
   return (
-    <div className="relative text-white min-h-screen flex items-center justify-center">
-      <Iridescence
-        color={[0.9, 0.3, 0.7]}
-        mouseReact={true}
-        amplitude={0.1}
-        speed={0.6}
-        className="absolute inset-0 z-0 opacity-80"
-      />
+    <div className="relative text-white min-h-screen flex flex-col items-center justify-center lg:flex-row lg:justify-between">
+      <div className="absolute inset-0 z-0">
+        <Iridescence
+          color={[0.9, 0.3, 0.7]}
+          mouseReact={true}
+          amplitude={0.1}
+          speed={0.6}
+          className="w-full h-full"
+        />
+      </div>
+      <div className="flex justify-center lg:w-1/2 w-full p-4 z-10">
+        <Lanyard
+          position={[0, 0, 20]}
+          gravity={[0, -40, 0]}
+          card={card}
+          lanyardTexture={lanyardTexture}
+          foto={hilman}
+        />
+      </div>
 
-      <main className="relative max-w-screen-2xl w-full px-6 py-12 z-10">
-        <div className="max-w-3xl mx-auto space-y-8 text-center">
+      <main className="relative lg:w-1/2 w-full px-6 py-12 z-10">
+        <div className="space-y-8 text-center lg:text-left">
           <div className="mockup-code bg-black/80 backdrop-blur-sm p-4 rounded-lg">
             <code className="text-green-400 text-lg">Frontend Developer</code>
           </div>
@@ -63,7 +78,7 @@ const Home = () => {
             Android and backend technologies.
           </p>
 
-          <nav className="flex justify-center gap-4">
+          <nav className="flex justify-center lg:justify-start gap-4 mt-6">
             {socialLinks.map((link) => (
               <Link
                 key={link.url}
