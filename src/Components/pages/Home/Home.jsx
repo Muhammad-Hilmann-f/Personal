@@ -1,50 +1,66 @@
 /* eslint-disable react/no-unescaped-entities */
+import { lazy, Suspense, useMemo } from "react";
 import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import TextPressure from "../../../blocks/TextAnimations/TextPressure/TextPressure";
-import Iridescence from "../../../blocks/Backgrounds/Iridescence/Iridescence";
 import card from "../../../blocks/Components/Lanyard/card.glb";
 import lanyardTexture from "../../../blocks/Components/Lanyard/lanyard.png";
-import Lanyard from "../../../blocks/Components/Lanyard/Lanyard.tsx";
 import hilman from "../../../assets/lanyard/hilman.png";
 
+const Lanyard = lazy(() =>
+  import("../../../blocks/Components/Lanyard/Lanyard")
+);
+const Iridescence = lazy(() =>
+  import("../../../blocks/Backgrounds/Iridescence/Iridescence")
+);
+
 const Home = () => {
-  const socialLinks = [
-    {
-      icon: (
-        <FaGithubSquare className="text-3xl hover:text-gray-300 transition-colors" />
-      ),
-      url: "https://github.com/Muhammad-Hilmann-f",
-      label: "GitHub Profile",
-    },
-    {
-      icon: (
-        <FaLinkedin className="text-3xl hover:text-gray-300 transition-colors" />
-      ),
-      url: "https://www.linkedin.com/in/muhammad-hilman-firmansyah-666senja/",
-      label: "LinkedIn Profile",
-    },
-  ];
+  const socialLinks = useMemo(
+    () => [
+      {
+        icon: (
+          <FaGithubSquare className="text-3xl hover:text-gray-300 transition-colors" />
+        ),
+        url: "https://github.com/Muhammad-Hilmann-f",
+        label: "GitHub Profile",
+      },
+      {
+        icon: (
+          <FaLinkedin className="text-3xl hover:text-gray-300 transition-colors" />
+        ),
+        url: "https://www.linkedin.com/in/muhammad-hilman-firmansyah-666senja/",
+        label: "LinkedIn Profile",
+      },
+    ],
+    []
+  );
 
   return (
     <div className="relative text-white min-h-screen flex flex-col items-center justify-center lg:flex-row lg:justify-between">
       <div className="absolute inset-0 z-0">
-        <Iridescence
-          color={[0.9, 0.3, 0.7]}
-          mouseReact={true}
-          amplitude={0.1}
-          speed={0.6}
-          className="w-full h-full"
-        />
+        <Suspense fallback={<div className="w-full h-full bg-black/40" />}>
+          <Iridescence
+            color={[0.9, 0.3, 0.7]}
+            mouseReact={true}
+            amplitude={0.1}
+            speed={0.6}
+            className="w-full h-full"
+          />
+        </Suspense>
       </div>
+
       <div className="flex justify-center lg:w-1/2 w-full p-4 z-10">
-        <Lanyard
-          position={[0, 0, 20]}
-          gravity={[0, -40, 0]}
-          card={card}
-          lanyardTexture={lanyardTexture}
-          foto={hilman}
-        />
+        <Suspense
+          fallback={<div className="text-center">Loading 3D Card...</div>}
+        >
+          <Lanyard
+            position={[0, 0, 20]}
+            gravity={[0, -40, 0]}
+            card={card}
+            lanyardTexture={lanyardTexture}
+            foto={hilman}
+            className="cursor-auto"
+          />
+        </Suspense>
       </div>
 
       <main className="relative lg:w-1/2 w-full px-6 py-12 z-10">
@@ -80,14 +96,16 @@ const Home = () => {
 
           <nav className="flex justify-center lg:justify-start gap-4 mt-6">
             {socialLinks.map((link) => (
-              <Link
+              <a
                 key={link.url}
-                to={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={link.label}
                 className="text-white hover:text-gray-300 transition-colors"
               >
                 {link.icon}
-              </Link>
+              </a>
             ))}
           </nav>
         </div>

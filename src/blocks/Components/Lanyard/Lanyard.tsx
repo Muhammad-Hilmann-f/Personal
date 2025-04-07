@@ -40,11 +40,15 @@ export default function Lanyard({
   transparent = true,
   foto,
 }: LanyardProps) {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
     <div className="relative z-0 w-full h-screen flex justify-center items-center transform scale-100 origin-center">
       <Canvas
         camera={{ position, fov }}
+        dpr={isMobile ? 1 : [1, 2]} // ⬅️ Turunin render resolution di mobile
         gl={{ alpha: transparent }}
+        shadows={false}
         onCreated={({ gl }) =>
           gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
         }
@@ -53,36 +57,40 @@ export default function Lanyard({
         <Physics gravity={gravity} timeStep={1 / 60}>
           <Band foto={foto} />
         </Physics>
-        <Environment blur={0.75}>
-          <Lightformer
-            intensity={2}
-            color="white"
-            position={[0, -1, 5]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={3}
-            color="white"
-            position={[-1, -1, 1]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={3}
-            color="white"
-            position={[1, 1, 1]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={10}
-            color="white"
-            position={[-10, 0, 14]}
-            rotation={[0, Math.PI / 2, Math.PI / 3]}
-            scale={[100, 10, 1]}
-          />
-        </Environment>
+
+        {/* ⬇️ Skip Environment di mobile */}
+        {!isMobile && (
+          <Environment blur={0.75}>
+            <Lightformer
+              intensity={2}
+              color="white"
+              position={[0, -1, 5]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[-1, -1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[1, 1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={10}
+              color="white"
+              position={[-10, 0, 14]}
+              rotation={[0, Math.PI / 2, Math.PI / 3]}
+              scale={[100, 10, 1]}
+            />
+          </Environment>
+        )}
       </Canvas>
     </div>
   );
@@ -148,7 +156,14 @@ function Band({ maxSpeed = 50, minSpeed = 0, foto }: BandProps) {
     }
   }, [hovered, dragged]);
 
+  // ⬇️ Throttle animation updates
+  let accumulator = useRef(0);
+
   useFrame((state, delta) => {
+    accumulator.current += delta;
+    if (accumulator.current < 1 / 30) return;
+    accumulator.current = 0;
+
     if (dragged && typeof dragged !== "boolean") {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
@@ -192,44 +207,21 @@ function Band({ maxSpeed = 50, minSpeed = 0, foto }: BandProps) {
   return (
     <>
       <group position={[0, 4, 0]}>
-        <RigidBody
-          ref={fixed}
-          {...segmentProps}
-          type={"fixed" as RigidBodyProps["type"]}
-        />
-        <RigidBody
-          position={[0.5, 0, 0]}
-          ref={j1}
-          {...segmentProps}
-          type={"dynamic" as RigidBodyProps["type"]}
-        >
+        <RigidBody ref={fixed} {...segmentProps} type="fixed" />
+        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody
-          position={[1, 0, 0]}
-          ref={j2}
-          {...segmentProps}
-          type={"dynamic" as RigidBodyProps["type"]}
-        >
+        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody
-          position={[1.5, 0, 0]}
-          ref={j3}
-          {...segmentProps}
-          type={"dynamic" as RigidBodyProps["type"]}
-        >
+        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
           position={[2, 0, 0]}
           ref={card}
           {...segmentProps}
-          type={
-            dragged
-              ? ("kinematicPosition" as RigidBodyProps["type"])
-              : ("dynamic" as RigidBodyProps["type"])
-          }
+          type={dragged ? "kinematicPosition" : "dynamic"}
         >
           <CuboidCollider args={[0.71, 1, 0.01]} />
           <group
