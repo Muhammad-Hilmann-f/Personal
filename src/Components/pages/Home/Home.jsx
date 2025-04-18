@@ -178,7 +178,7 @@ const Home = () => {
         </motion.div>
       </motion.div>
 
-      {/* Skills and Projects components need to be modified separately */}
+      {/* Skills and Projects components */}
       <Skills />
       <Projects />
     </>

@@ -92,7 +92,7 @@ const Footer = () => {
               transition={{ delay: 0.8, duration: 1.5 }}
               className="block text-center mt-1 text-gray-700 text-xs"
             >
-              Built with melancholy & code
+              Built with melancholy & code.
             </motion.span>
           </motion.div>
         </div>
