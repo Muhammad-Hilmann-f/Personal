@@ -1,8 +1,24 @@
 import { useMemo } from "react";
+import { motion } from "framer-motion";
 import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import photos from "../../../../public/assets/photos.jpg";
 import "./index.css";
-// import Skills from "../Skills/Skills";
+import Skills from "../Skills/Skills";
+import Projects from "../Projects/Project";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
 
 const Home = () => {
   const socialLinks = useMemo(
@@ -27,25 +43,61 @@ const Home = () => {
   return (
     <>
       <div className="relative h-screen w-full overflow-hidden">
-        {/* Background image */}
-        <div
+        {/* Background image with subtle animation */}
+        <motion.div
+          initial={{ scale: 1.05, opacity: 0.8 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
           className="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-blend-multiply bg-black/40 grayscale-50"
           style={{ backgroundImage: `url(${photos})` }}
-        ></div>
-        <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-10 text-orange-600 font-serif leading-[1.1]">
-          <h1 className="text-[4rem]">Muhammad</h1>
-          <h1 className="text-[4rem] ml-[8rem] mt-[1.2rem]">Hilman F</h1>
-          <h1 className="text-[4rem] mt-[4rem]">Personal</h1>
-          <h1 className="text-[4rem] ml-[8rem] mt-[1.2rem]">Website</h1>
-        </div>
-        {/* Top nav */}
-        <div className="absolute top-6 left-0 w-full px-8 flex justify-between text-sm text-gray-200 z-20">
+        ></motion.div>
+
+        {/* Hero text with staggered animation */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+          className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-10 text-orange-600 font-serif leading-[1.1]"
+        >
+          <motion.h1 variants={fadeInUp} className="text-[4rem]">
+            Muhammad
+          </motion.h1>
+          <motion.h1
+            variants={fadeInUp}
+            className="text-[4rem] ml-[8rem] mt-[1.2rem]"
+          >
+            Hilman F
+          </motion.h1>
+          <motion.h1 variants={fadeInUp} className="text-[4rem] mt-[4rem]">
+            Personal
+          </motion.h1>
+          <motion.h1
+            variants={fadeInUp}
+            className="text-[4rem] ml-[8rem] mt-[1.2rem]"
+          >
+            Website
+          </motion.h1>
+        </motion.div>
+
+        {/* Top nav with subtle fade */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          className="absolute top-6 left-0 w-full px-8 flex justify-between text-sm text-gray-200 z-20"
+        >
           <div>/2025 – Portfolio Website</div>
           <div className="uppercase text-center"></div>
           <div>Every line of code is one step closer.</div>
-        </div>
-        {/* Social links - bottom left */}
-        <nav className="absolute bottom-6 left-6 flex gap-4 z-10">
+        </motion.div>
+
+        {/* Social links with fade-in */}
+        <motion.nav
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="absolute bottom-6 left-6 flex gap-4 z-10"
+        >
           {socialLinks.map((link) => (
             <a
               key={link.url}
@@ -58,18 +110,26 @@ const Home = () => {
               {link.icon}
             </a>
           ))}
-        </nav>
+        </motion.nav>
       </div>
 
-      {/* About Section */}
-      <div className="bg-black text-white py-16">
+      {/* About Section with scroll animations */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={stagger}
+        className="bg-black text-white py-16"
+      >
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Section number */}
-            <div className="text-gray-400 text-lg">[ 01 ]</div>
+            <motion.div variants={fadeInUp} className="text-gray-400 text-lg">
+              [ 01 ]
+            </motion.div>
 
             {/* About content */}
-            <div className="space-y-8">
+            <motion.div variants={fadeInUp} className="space-y-8">
               <h2 className="text-xl font-light mb-6">About</h2>
               <p className="font-light leading-relaxed">
                 Passionate Frontend Developer And UI Designer With A Strong
@@ -84,10 +144,10 @@ const Home = () => {
                 Expanding Knowledge In Full-Stack Development Including Android
                 And Backend Technologies.
               </p>
-            </div>
+            </motion.div>
 
             {/* Approach Angle content */}
-            <div className="space-y-8">
+            <motion.div variants={fadeInUp} className="space-y-8">
               <h2 className="text-xl font-light mb-6">Approach Angle</h2>
               <p className="font-light leading-relaxed">
                 I Transform Complex Technical Challenges Into Elegant User
@@ -102,18 +162,25 @@ const Home = () => {
                 Flawlessly. Every Line Of Code Is Crafted With Precision And
                 Purpose, Ensuring Optimal Performance Across All Devices.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        {/* Plus icon/button at bottom right */}
-        <div className="flex justify-end mt-8 mr-8">
-          <button className="text-white text-3xl">+</button>
-        </div>
-      </div>
+        {/* Plus icon/button at bottom right with hover animation */}
+        <motion.div variants={fadeInUp} className="flex justify-end mt-8 mr-8">
+          <motion.button
+            whileHover={{ rotate: 90, scale: 1.1 }}
+            transition={{ duration: 0.3 }}
+            className="text-white text-3xl"
+          >
+            +
+          </motion.button>
+        </motion.div>
+      </motion.div>
 
-      {/* You can add your Skills component here */}
-      {/* <Skills /> */}
+      {/* Skills and Projects components need to be modified separately */}
+      <Skills />
+      <Projects />
     </>
   );
 };

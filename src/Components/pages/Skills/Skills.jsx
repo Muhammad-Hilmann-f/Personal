@@ -1,77 +1,90 @@
-import { VscGithubInverted } from "react-icons/vsc";
-import {
-  FaLinkedin,
-  FaReact,
-  FaNodeJs,
-  FaGitAlt,
-  FaPhp,
-  FaLaravel,
-} from "react-icons/fa";
-import { IoLogoJavascript } from "react-icons/io5";
-import { DiMysql, DiMongodb } from "react-icons/di";
-import { SiTailwindcss, SiPostman, SiFigma } from "react-icons/si";
-import { Link } from "react-router-dom";
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/prop-types */
+import { motion } from "framer-motion";
+
+const skillsData = {
+  Frontend: ["JavaScript", "React.js", "Tailwind CSS"],
+  Backend: ["PHP", "Laravel", "Node.js"],
+  Database: ["MongoDB", "MySQL"],
+  Design: ["Figma"],
+  Tools: ["Git", "Postman"],
+};
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const SkillSection = ({ title, skills }) => (
+  <motion.div
+    variants={fadeInUp}
+    className="mb-12 transition-all duration-500 hover:opacity-80"
+  >
+    <h3 className="text-lg font-light text-gray-400 mb-6 tracking-widest uppercase">
+      {title}
+    </h3>
+    <ul className="space-y-4">
+      {skills.map((skill, idx) => (
+        <motion.li
+          key={idx}
+          initial={{ opacity: 0, x: -10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ delay: idx * 0.1, duration: 0.5 }}
+          className="text-gray-300 text-sm tracking-wider font-light border-b border-gray-800 pb-2"
+        >
+          {skill}
+        </motion.li>
+      ))}
+    </ul>
+  </motion.div>
+);
 
 const Skills = () => {
-  const skills = [
-    // Frontend Skills
-    { Icon: IoLogoJavascript, name: "JavaScript", category: "Frontend" },
-    { Icon: FaReact, name: "React.js", category: "Frontend" },
-    { Icon: SiTailwindcss, name: "Tailwind CSS", category: "Frontend" },
-
-    // Backend Skills
-    { Icon: FaPhp, name: "PHP", category: "Backend" },
-    { Icon: FaLaravel, name: "Laravel", category: "Backend" },
-    { Icon: FaNodeJs, name: "Node.js", category: "Backend" },
-
-    // Database Skills
-    { Icon: DiMongodb, name: "MongoDB", category: "Database" },
-    { Icon: DiMysql, name: "MySQL", category: "Database" },
-
-    // Design Skills
-    { Icon: SiFigma, name: "Figma", category: "Design" },
-
-    // Tools
-    { Icon: FaGitAlt, name: "Git", category: "Tools" },
-    { Icon: SiPostman, name: "Postman", category: "Tools" },
-  ];
-
   return (
-    <div className="relative min-h-screen bg-gray-900 text-white py-20">
-      <h2 className="text-5xl font-bold text-center mb-16">Technical Skills</h2>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={stagger}
+      className="bg-gray-900 text-gray-400 py-24"
+      id="skills"
+    >
+      <div className="container mx-auto px-8">
+        <div className="flex flex-col md:flex-row md:space-x-16 lg:space-x-24">
+          {/* Left side - Title */}
+          <motion.div variants={fadeInUp} className="md:w-1/3 mb-12 md:mb-0">
+            <span className="text-xs tracking-widest text-gray-500 font-light mb-4 block">
+              02 / KNOWLEDGE
+            </span>
+            <h2 className="text-2xl font-light mb-6 text-gray-200">
+              Technical Skills
+            </h2>
+            <p className="text-sm font-light leading-relaxed opacity-70">
+              A collection of tools and technologies I've worked with throughout
+              my journey as a developer.
+            </p>
+          </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {skills.map(({ Icon, name, category }) => (
-          <div
-            key={name}
-            className="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition-colors"
-          >
-            <Icon className="text-5xl mb-4 text-blue-500" />
-            <h3 className="text-xl font-semibold mb-2">{name}</h3>
-            <p className="text-gray-400 mb-4">{category}</p>
+          {/* Right side - Skills */}
+          <div className="md:w-2/3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Object.entries(skillsData).map(([category, skills]) => (
+                <SkillSection key={category} title={category} skills={skills} />
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-
-      <div className="flex justify-center space-x-6 mt-16">
-        <div>
-          <Link
-            to="https://github.com/Muhammad-Hilmann-f"
-            className="text-4xl text-gray-400 hover:text-white"
-          >
-            <VscGithubInverted />
-          </Link>
-        </div>
-        <div>
-          <Link
-            to="https://www.linkedin.com/in/muhammad-hilman-firmansyah-666senja/"
-            className="text-4xl text-gray-400 hover:text-white"
-          >
-            <FaLinkedin />
-          </Link>
         </div>
       </div>
-    </div>
+    </motion.section>
   );
 };
 
