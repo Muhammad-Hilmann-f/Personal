@@ -4,7 +4,7 @@ import { FaGithubSquare, FaLinkedin, FaExternalLinkAlt } from "react-icons/fa";
 import home from "../../../assets/booking-img/img-fe-booking/home.png";
 import homeHealing from "../../../assets/HealingkuAI/home-healing.png";
 import homeOnly from "../../../assets/OnlySmart/homeOnly.png";
-import spotifyClone from "../../../assets/spotifyClone/spotify-clone.png";
+import spotifyClone from "../../../assets/spotifyCLone/spotify-clone.png";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
