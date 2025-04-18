@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      primary: ["Cormorant Garamond", "serif"],
+      serif: ["Playfair Display", "serif"],
     },
   },
   // eslint-disable-next-line no-undef

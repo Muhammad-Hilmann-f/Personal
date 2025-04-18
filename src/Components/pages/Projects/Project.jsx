@@ -1,7 +1,6 @@
 import { FaGithubSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import InfiniteMenu from "../../../blocks/Components/InfiniteMenu/InfiniteMenu";
 import home from "../../../assets/booking-img/img-fe-booking/home.png";
 import homeHealing from "../../../assets/HealingkuAI/home-healing.png";
 import homeOnly from "../../../assets/OnlySmart/homeOnly.png";
@@ -44,17 +43,23 @@ const Projects = () => {
                 <code>Projects!</code>
               </pre>
             </div>
-
-            {/* InfiniteMenu */}
-            <div
-              style={{
-                height: "600px",
-                position: "relative",
-              }}
-            >
-              <InfiniteMenu items={items} />
-            </div>
-
+            {items.map((item) => {
+              return (
+                <div
+                  key={item.title}
+                  className="bg-white p-4 rounded-md shadow-md w-100"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-12 h-12"
+                  />
+                  <h2 className="text-lg font-bold text-gray-800">
+                    {item.title}
+                  </h2>
+                </div>
+              );
+            })}
             <div className="flex cursor-pointer justify-center text-3xl">
               <Link to="https://github.com/Muhammad-Hilmann-f">
                 <FaGithubSquare className="mr-2" />

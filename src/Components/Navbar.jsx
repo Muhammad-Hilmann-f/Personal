@@ -7,7 +7,6 @@ import {
   VscProject,
   VscSettingsGear,
 } from "react-icons/vsc";
-import Dock from "../blocks/Components/Dock/Dock";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -36,14 +35,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-transparent">
-      <Dock
-        items={items}
-        panelHeight={68}
-        baseItemSize={50}
-        magnification={70}
-      />
-    </div>
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-transparent"></div>
   );
 };
 

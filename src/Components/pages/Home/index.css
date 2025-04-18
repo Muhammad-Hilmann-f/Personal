@@ -7,7 +7,7 @@ html {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  font-family: Arial, sans-serif;
+  font-family: primary;
 }
 
 .responsive-wrapper {
